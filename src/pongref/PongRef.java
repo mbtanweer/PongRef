@@ -1,5 +1,5 @@
 package pongref;
-
+//copyright 2013 Wintriss Technical Schools
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
