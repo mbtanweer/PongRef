@@ -25,8 +25,8 @@ public class PongRef extends JComponent implements MouseMotionListener
     JFrame jf;
     int ballx = 1000;
     int bally = 1000;
-    int ballXspeed = 2;
-    int ballYspeed = 2;
+    int ballXspeed = 20;
+    int ballYspeed = 20;
     int width = Toolkit.getDefaultToolkit().getScreenSize().width;
     int height = Toolkit.getDefaultToolkit().getScreenSize().height;
     int ballSize = 50;
@@ -59,7 +59,9 @@ public class PongRef extends JComponent implements MouseMotionListener
     public void paint(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
+        g2.scale(1.4, 1.1);
         g2.drawImage(sailboatImage, 0, 0, null);
+        g2.scale(1, 1);
         g2.setColor(Color.GREEN);
         ball = new Ellipse2D.Double(ballx, bally, ballSize, ballSize);
         //g2.fillOval((int) ballx, bally, ballSize, ballSize); //fill Oval at start of project, then make object
@@ -75,11 +77,11 @@ public class PongRef extends JComponent implements MouseMotionListener
         ballx += ballXspeed;
         bally += ballYspeed;
 
-        if (ballx > (width - ballSize)) // To compensate for ball size
+        if (ballx > (width - (ballSize + 800))) // To compensate for ball size
         {
             ballXspeed = -ballXspeed;
         }
-        if (bally > (height - ballSize - 100)) // To compensate for bottom margin
+        if (bally > (height - (ballSize + 250))) // To compensate for bottom margin
         {
             ballYspeed = -ballYspeed;
         }
@@ -100,8 +102,9 @@ public class PongRef extends JComponent implements MouseMotionListener
         if (ballx < 0)
         {
             g2.setColor(Color.red);
-            g2.scale(9, 9);
+            g2.scale(6, 6);
             g2.drawString("Loser", 0, 99);
+            g2.scale(1, 1);
         }
         repaint();
     }
