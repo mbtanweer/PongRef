@@ -56,6 +56,10 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
         jf.add(this); // This means this paint method
         jf.addMouseMotionListener(this);
         sailboatImage = new ImageIcon(this.getClass().getResource("sailboat-218697.jpg")).getImage();
+        ball = new Ellipse2D.Double(ballx, bally, ballSize, ballSize);
+        paddle = new Rectangle2D.Double(paddleX, paddleY, paddleWidth, paddleHeight);
+
+
         jf.setVisible(true);
     }
     @Override
@@ -66,29 +70,27 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
         g2.drawImage(sailboatImage, 0, 0, null);
         g2.scale(1, 1);
         g2.setColor(Color.GREEN);
-        ball = new Ellipse2D.Double(ballx, bally, ballSize, ballSize);
         //g2.fillOval((int) ballx, bally, ballSize, ballSize); //fill Oval at start of project, then make object
         g2.fill(ball);
         g2.setColor(Color.blue);
-        paddle = new Rectangle2D.Double(paddleX, paddleY, paddleWidth, paddleHeight);
         //g2.fillRect(paddleX, paddleY, paddleWidth, paddleHeight); //fill Rect at start of project, then make object
         g2.fill(paddle);
         g2.setColor(Color.BLACK);
         g2.drawString("SCORE", width - 500, 100);
         g2.setFont(new Font("Bank Gothic", Font.BOLD, 99));
         g2.drawString(score + "", width - 500, 200);
-        ballx += ballXspeed;
-        bally += ballYspeed;
+        ball.x += ballXspeed;
+        ball.y += ballYspeed;
 
-        if (ballx > (width - (ballSize + 800))) // To compensate for ball size
+        if (ball.x > (width - (ballSize + 800))) // To compensate for ball size
         {
             ballXspeed = -ballXspeed;
         }
-        if (bally > (height - (ballSize + 250))) // To compensate for bottom margin
+        if (ball.y > (height - (ballSize + 250))) // To compensate for bottom margin
         {
             ballYspeed = -ballYspeed;
         }
-        if (bally < 0)
+        if (ball.y < 0)
         {
             ballYspeed = -ballYspeed;
         }
@@ -97,12 +99,12 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
             if (ballXspeed < 0) // To keep the ball from sticking to the paddle
             {
                 ballXspeed = -ballXspeed;
-                ballx += 10; // To keep the score from going up by more than one
+                ball.x += 10; // To keep the score from going up by more than one
             }
             score = score + 1;
             pingSoundFile.play();
         }
-        if (ballx < 0)
+        if (ball.x < 0)
         {
             g2.setColor(Color.red);
             g2.scale(6, 6);
@@ -118,7 +120,7 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
     @Override
     public void mouseMoved(MouseEvent me)
     {
-        paddleY = me.getY();
+        paddle.y = me.getY();
     }
     @Override
     public void actionPerformed(ActionEvent ae)
