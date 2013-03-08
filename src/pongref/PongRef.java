@@ -22,7 +22,6 @@ import javax.swing.Timer;
 
 public class PongRef extends JComponent implements MouseMotionListener, ActionListener
 {
-
     URL pingSoundAddress = getClass().getResource("fire.wav");
     AudioClip pingSoundFile = JApplet.newAudioClip(pingSoundAddress);
     JFrame jf;
@@ -42,6 +41,7 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
     int score = 0;
     Image sailboatImage;
     Timer ticker;
+    
     public static void main(String[] args) throws InterruptedException
     {
         new PongRef().getGoing();
@@ -58,8 +58,6 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
         sailboatImage = new ImageIcon(this.getClass().getResource("sailboat-218697.jpg")).getImage();
         ball = new Ellipse2D.Double(ballx, bally, ballSize, ballSize);
         paddle = new Rectangle2D.Double(paddleX, paddleY, paddleWidth, paddleHeight);
-
-
         jf.setVisible(true);
     }
     @Override
@@ -99,7 +97,6 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
             if (ballXspeed < 0) // To keep the ball from sticking to the paddle
             {
                 ballXspeed = -ballXspeed;
-                ball.x += 10; // To keep the score from going up by more than one
             }
             score = score + 1;
             pingSoundFile.play();
