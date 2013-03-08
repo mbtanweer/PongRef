@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
@@ -16,16 +18,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JApplet;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
-public class PongRef extends JComponent implements MouseMotionListener
+public class PongRef extends JComponent implements MouseMotionListener, ActionListener
 {
 
     URL pingSoundAddress = getClass().getResource("fire.wav");
     AudioClip pingSoundFile = JApplet.newAudioClip(pingSoundAddress);
     JFrame jf;
-    int ballx = 1000;
-    int bally = 1000;
-    int ballXspeed = 20;
+    public int ballx = 1000;
+    public int bally = 1000;
+    public int ballXspeed = 20;
     int ballYspeed = 20;
     int width = Toolkit.getDefaultToolkit().getScreenSize().width;
     int height = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -38,23 +41,23 @@ public class PongRef extends JComponent implements MouseMotionListener
     Rectangle2D.Double paddle;
     int score = 0;
     Image sailboatImage;
-
-    public static void main(String[] args)
+    Timer ticker;
+    public static void main(String[] args) throws InterruptedException
     {
         new PongRef().getGoing();
     }
-
-    private void getGoing()
+    private void getGoing() throws InterruptedException
     {
+        ticker = new Timer(20, this);
+        ticker.start();
         jf = new JFrame("My Pong Game");
-        jf.setVisible(true);
         jf.setSize(width, height);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.add(this); // This means this paint method
         jf.addMouseMotionListener(this);
         sailboatImage = new ImageIcon(this.getClass().getResource("sailboat-218697.jpg")).getImage();
+        jf.setVisible(true);
     }
-
     @Override
     public void paint(Graphics g)
     {
@@ -106,17 +109,20 @@ public class PongRef extends JComponent implements MouseMotionListener
             g2.drawString("Loser", 0, 99);
             g2.scale(1, 1);
         }
-        repaint();
+//        repaint();
     }
-
     @Override
     public void mouseDragged(MouseEvent me)
     {
     }
-
     @Override
     public void mouseMoved(MouseEvent me)
     {
         paddleY = me.getY();
+    }
+    @Override
+    public void actionPerformed(ActionEvent ae)
+    {
+        repaint();
     }
 }
