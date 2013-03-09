@@ -44,7 +44,8 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
     
     public static void main(String[] args) throws InterruptedException
     {
-        new PongRef().getGoing();
+        PongRef pr = new PongRef();
+        pr.getGoing();
     }
     private void getGoing() throws InterruptedException
     {
@@ -79,7 +80,6 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
         g2.drawString(score + "", width - 500, 200);
         ball.x += ballXspeed;
         ball.y += ballYspeed;
-
         if (ball.x > (width - (ballSize + 800))) // To compensate for ball size
         {
             ballXspeed = -ballXspeed;
@@ -106,9 +106,8 @@ public class PongRef extends JComponent implements MouseMotionListener, ActionLi
             g2.setColor(Color.red);
             g2.scale(6, 6);
             g2.drawString("Loser", 0, 99);
-            g2.scale(1, 1);
         }
-//        repaint();
+        System.out.println(this.ballx + " " + ball.x);
     }
     @Override
     public void mouseDragged(MouseEvent me)
